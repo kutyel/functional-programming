@@ -1,0 +1,72 @@
+{
+  "name": "functional-programming",
+  "description": "Functional programming exercises in JavaScript",
+  "homepage": "https://documentup.com/kutyel/functional-programming",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": {
+    "email": "flaviocorpa@gmail.com",
+    "name": "Flavio Corpa",
+    "url": "http://flaviocorpa.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kutyel/functional-programming.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kutyel/functional-programming/issues"
+  },
+  "keywords": [
+    "fp",
+    "functionalprogramming",
+    "javascript",
+    "ramda"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "coveralls": "latest",
+    "git-dirty": "latest",
+    "husky": "latest",
+    "jest": "latest",
+    "lint-staged": "latest",
+    "prettier-standard": "latest",
+    "standard": "latest",
+    "standard-markdown": "latest"
+  },
+  "engines": {
+    "node": ">= 6"
+  },
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "lint": "standard-markdown && standard",
+    "precommit": "lint-staged",
+    "pretest": "npm run lint",
+    "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "license": "MIT",
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "*.js": [
+      "git add",
+      "prettier-standard"
+    ]
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  }
+}

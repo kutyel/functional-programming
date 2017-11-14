@@ -1,11 +1,4 @@
-'use strict'
-
-// Our first functor! 🎉
-const Box = x => ({
-  map: f => Box(f(x)),
-  fold: f => f(x),
-  inspect: () => `Box(${x})`
-})
+const Box = require('./box')
 
 const nextCharFromNumberString = str =>
   Box(str)
@@ -15,8 +8,20 @@ const nextCharFromNumberString = str =>
     .map(String.fromCharCode)
     .fold(c => c.toLowerCase())
 
-const result = nextCharFromNumberString('  64 ')
+const moneyToFloat = str =>
+  Box(str)
+    .map(s => s.replace(/\€/g, ''))
+    .map(parseFloat)
 
-console.log(result) // 'a'
+const percentToFloat = str =>
+  Box(str)
+    .map(s => s.replace(/\%/g, ''))
+    .map(parseFloat)
+    .map(n => n * 0.01)
 
-module.exports = Box
+const applyDiscount = (price, discount) =>
+  moneyToFloat(price).fold(cost =>
+    percentToFloat(discount).fold(savings => cost - cost * savings)
+  )
+
+console.log(applyDiscount('5.00€', '20%')) // 4 (€)

@@ -1,4 +1,5 @@
 const Box = require('./box')
+const { Left, Right } = require('./either')
 
 const nextCharFromNumberString = str =>
   Box(str)
@@ -25,3 +26,16 @@ const applyDiscount = (price, discount) =>
   )
 
 console.log(applyDiscount('5.00€', '20%')) // 4 (€)
+
+const fromNullable = x => (x != null ? Right(x) : Left(null))
+
+const findColor = name =>
+  fromNullable({ red: '#f00', green: '#0f0', blue: '#00f' }[name])
+
+const returnHexColor = n =>
+  findColor(n)
+    .map(c => c.slice(1))
+    .fold(_ => 'COLOR NOT FOUND', c => c.toUpperCase())
+
+console.log(returnHexColor('blue')) // 00F
+console.log(returnHexColor('yellow')) // COLOR NOT FOUND

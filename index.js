@@ -1,3 +1,4 @@
+const fs = require('fs')
 const Box = require('./box')
 const { Left, Right } = require('./either')
 
@@ -39,3 +40,19 @@ const returnHexColor = n =>
 
 console.log(returnHexColor('blue')) // 00F
 console.log(returnHexColor('yellow')) // COLOR NOT FOUND
+
+const tryCatch = f => {
+  try {
+    return Right(f())
+  } catch (e) {
+    return Left(e)
+  }
+}
+
+const getPort = file =>
+  tryCatch(() => fs.readFileSync(file))
+    .chain(c => tryCatch(() => JSON.parse(c)))
+    .fold(_ => 3000, c => c.port)
+
+console.log(getPort('config.json')) // 8080
+console.log(getPort()) // 3000

@@ -7,7 +7,9 @@ const Sum = x => ({
   inspect: () => `Sum(${x})`
 })
 
-console.log(Sum(1).concat(Sum(2))) // Sum(3)
+Sum.empty = () => Sum(0)
+
+console.log(Sum.empty().concat(Sum(1).concat(Sum(2)))) // Sum(3)
 
 const All = x => ({
   x,
@@ -15,7 +17,9 @@ const All = x => ({
   inspect: () => `All(${x})`
 })
 
-console.log(All(true).concat(All(false))) // All(false)
+All.empty = () => All(true)
+
+console.log(All.empty().concat(All(false))) // All(false)
 
 const First = x => ({
   x,
@@ -24,3 +28,47 @@ const First = x => ({
 })
 
 console.log(First('first').concat(First('second'))) // First(first)
+
+const sum = xs => xs.reduce((acc, x) => acc + x, 0)
+
+const all = xs => xs.reduce((acc, x) => acc && x, true)
+
+/**
+ * Product Monoid
+ */
+const Product = x => ({
+  x,
+  concat: ({ x: y }) => Product(x * y)
+})
+
+Product.empty = () => Product(1)
+
+/**
+ * Any Monoid
+ */
+const Any = x => ({
+  x,
+  concat: ({ x: y }) => Any(x || y)
+})
+
+Any.empty = () => Any(false)
+
+/**
+ * Max Monoid
+ */
+const Max = x => ({
+  x,
+  concat: ({ x: y }) => Max(x > y ? x : y)
+})
+
+Max.empty = () => Max(-Infinity)
+
+/**
+ * Min Monoid
+ */
+const Min = x => ({
+  x,
+  concat: ({ x: y }) => Min(x < y ? x : y)
+})
+
+Min.empty = () => Min(Infinity)

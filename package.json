@@ -22,7 +22,9 @@
     "javascript",
     "ramda"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "data.task": "^3.1.1"
+  },
   "devDependencies": {
     "coveralls": "latest",
     "git-dirty": "latest",

@@ -1,3 +1,9 @@
+/**
+ * A Monoid is a semigroup with an identity (or neutral) element
+ *
+ * In the following examples, the neutral element is the `empty` method
+ */
+
 const Product = x => ({
   x,
   concat: ({ x: y }) => Product(x * y)

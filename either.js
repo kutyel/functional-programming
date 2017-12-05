@@ -14,4 +14,6 @@ const Left = x => ({
   inspect: () => `Left(${x})`
 })
 
-module.exports = { Left, Right }
+const fromNullable = x => (x != null ? Right(x) : Left(null))
+
+module.exports = { Left, Right, fromNullable }

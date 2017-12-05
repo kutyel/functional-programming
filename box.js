@@ -6,6 +6,7 @@
  * - Identity law: fx.map(id) === id(fx)
  */
 const Box = x => ({
+  ap: b => b.map(x),
   map: f => Box(f(x)),
   fold: f => f(x),
   inspect: () => `Box(${x})`

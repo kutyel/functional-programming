@@ -2,14 +2,14 @@ const add = (x, y) => x + y
 
 const compose = (...fns) => args => fns.reduceRight((x, f) => f(x), args)
 
-const concat = (_, y) => xs => xs.concat(y) // FIXME: very strange implementation... 🤔
-
 const curry = (f, arr = []) => (...args) =>
   (x => (x.length >= f.length ? f(...x) : curry(f, x)))([...arr, ...args])
 
+const concat = curry((x, y) => x.concat(y))
+
 const filter = f => xs => xs.filter(f)
 
-const flip = f => (x, y, ...args) => f(y, x, ...args)
+const flip = f => curry((x, y, ...args) => f(y, x, ...args))
 
 const head = xs => xs[0]
 

@@ -2,6 +2,8 @@ const add = x => y => x + y
 
 const inc = add(1) // (y => 1 + y)
 
+console.log(inc(3)) // 4
+
 const modulo = dvr => dvd => dvd % dvr
 
 const isOdd = modulo(2)

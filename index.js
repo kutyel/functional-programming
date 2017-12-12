@@ -1,56 +1,18 @@
-const fs = require('fs')
-const Box = require('./box')
-const { Left, Right, fromNullable } = require('./either')
+const curry = (f, arr = []) => (...args) =>
+  (x => (x.length >= f.length ? f(...x) : curry(f, x)))([...arr, ...args])
 
-const nextCharFromNumberString = str =>
-  Box(str)
-    .map(s => s.trim())
-    .map(parseInt)
-    .map(i => i + 1)
-    .map(String.fromCharCode)
-    .fold(c => c.toLowerCase())
+const filter = f => xs => xs.filter(f)
 
-const moneyToFloat = str =>
-  Box(str)
-    .map(s => s.replace(/\€/g, ''))
-    .map(parseFloat)
+const map = f => xs => xs.map(f)
 
-const percentToFloat = str =>
-  Box(str)
-    .map(s => s.replace(/\%/g, ''))
-    .map(parseFloat)
-    .map(n => n * 0.01)
+const reduce = (reducer, init) => xs => xs.reduce(reducer, init)
 
-const applyDiscount = (price, discount) =>
-  moneyToFloat(price).fold(cost =>
-    percentToFloat(discount).fold(savings => cost - cost * savings)
-  )
+const split = char => x => x.split(char)
 
-console.log(applyDiscount('5.00€', '20%')) // 4 (€)
-
-const findColor = name =>
-  fromNullable({ red: '#f00', green: '#0f0', blue: '#00f' }[name])
-
-const returnHexColor = n =>
-  findColor(n)
-    .map(c => c.slice(1))
-    .fold(_ => 'COLOR NOT FOUND', c => c.toUpperCase())
-
-console.log(returnHexColor('blue')) // 00F
-console.log(returnHexColor('yellow')) // COLOR NOT FOUND
-
-const tryCatch = f => {
-  try {
-    return Right(f())
-  } catch (e) {
-    return Left(e)
-  }
+module.exports = {
+  curry,
+  filter,
+  map,
+  reduce,
+  split
 }
-
-const getPort = file =>
-  tryCatch(() => fs.readFileSync(file))
-    .chain(c => tryCatch(() => JSON.parse(c)))
-    .fold(_ => 3000, c => c.port)
-
-console.log(getPort('config.json')) // 8080
-console.log(getPort()) // 3000

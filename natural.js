@@ -12,7 +12,7 @@
  */
 const Task = require('data.task')
 const Box = require('./box')
-const { Right, Left, fromNullable } = require('./either')
+const { Right, fromNullable } = require('./either')
 
 const boxToEither = b => b.fold(Right)
 

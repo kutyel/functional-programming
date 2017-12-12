@@ -31,4 +31,8 @@ console.log(First('first').concat(First('second'))) // First(first)
 
 const sum = xs => xs.reduce((acc, x) => acc + x, 0)
 
+console.log(sum([1, 2, 3])) // 6
+
 const all = xs => xs.reduce((acc, x) => acc && x, true)
+
+console.log(all([true, false, true])) // false

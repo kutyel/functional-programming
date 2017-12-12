@@ -4,7 +4,6 @@ describe('You are now a CURRY genius!!! 🍛 👏🏼 👏🏼 👏🏼', () => 
   // Exercise 1
   test('Refactor to remove all arguments by partially applying the function.', () => {
     const words = split(' ')
-
     expect(words('Jingle bells Batman smells')).toEqual([
       'Jingle',
       'bells',
@@ -28,7 +27,6 @@ describe('You are now a CURRY genius!!! 🍛 👏🏼 👏🏼 👏🏼', () => 
   test('Refactor to remove all arguments by partially applying the functions.', () => {
     const match = curry((reg, str) => reg.test(str))
     const filterQs = filter(match(/q/i))
-
     expect(filterQs(['quick', 'camels', 'quarry', 'over', 'quails'])).toEqual([
       'quick',
       'quarry',
@@ -42,7 +40,6 @@ describe('You are now a CURRY genius!!! 🍛 👏🏼 👏🏼 👏🏼', () => 
     const _keepHighest = (x, y) => (x >= y ? x : y)
     // REFACTOR THIS ONE:
     const max = reduce(_keepHighest, -Infinity)
-
     expect(max([323, 523, 554, 123, 5234])).toBe(5234)
   })
 

@@ -21,10 +21,7 @@ export const map = f => xs => xs.map(f)
 
 export const prop = prop => obj => obj[prop]
 
-export const reduce = (reducer, init, arr) =>
-  !!arr && arr.length
-    ? arr.reduce(reducer, init) // arity 3
-    : xs => xs.reduce(reducer, init) // arity 2
+export const reduce = curry((reducer, init, xs) => xs.reduce(reducer, init))
 
 export const replace = (regex, char) => str => str.replace(regex, char)
 

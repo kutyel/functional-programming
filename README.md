@@ -4,6 +4,8 @@
 
 Functional programming exercises in JavaScript
 
+[![Build Status](https://img.shields.io/travis/kutyel/functional-programming/master.svg?style=flat-square)](https://travis-ci.org/kutyel/functional-programming)
+[![Coverage Status](https://img.shields.io/coveralls/kutyel/functional-programming.svg?style=flat-square)](https://coveralls.io/github/kutyel/functional-programming)
 [![Dependency status](https://img.shields.io/david/kutyel/functional-programming.svg?style=flat-square)](https://david-dm.org/kutyel/functional-programming)
 [![Dev Dependencies Status](https://img.shields.io/david/dev/kutyel/functional-programming.svg?style=flat-square)](https://david-dm.org/kutyel/functional-programming#info=devDependencies)
 [![NPM Status](https://img.shields.io/npm/dm/functional-programming.svg?style=flat-square)](https://www.npmjs.org/package/functional-programming)

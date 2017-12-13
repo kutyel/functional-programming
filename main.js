@@ -1,9 +1,9 @@
-export const add = (x, y) => x + y
-
 export const compose = (...fns) => args => fns.reduceRight((x, f) => f(x), args)
 
 export const curry = (f, arr = []) => (...args) =>
   (x => (x.length >= f.length ? f(...x) : curry(f, x)))([...arr, ...args])
+
+export const add = curry((x, y) => x + y)
 
 export const concat = curry((x, y) => x.concat(y))
 
@@ -12,6 +12,8 @@ export const filter = f => xs => xs.filter(f)
 export const flip = f => curry((x, y, ...args) => f(y, x, ...args))
 
 export const head = xs => xs[0]
+
+export const identity = x => x
 
 export const join = char => x => x.join(char)
 
@@ -30,3 +32,5 @@ export const sortBy = f => xs => xs.sort((x, y) => f(x) > f(y))
 export const split = char => x => x.split(char)
 
 export const toLower = str => str.toLowerCase()
+
+export const toUpper = str => str.toUpperCase()

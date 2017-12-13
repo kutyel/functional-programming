@@ -46,10 +46,10 @@
   "scripts": {
     "clean": "rm -rf node_modules",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "lint": "standard-markdown && standard",
+    "lint": "npm run pretty && standard-markdown && standard",
     "precommit": "lint-staged",
     "pretest": "npm run lint",
-    "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
+    "pretty": "prettier-standard *.js --single-quote",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
   },

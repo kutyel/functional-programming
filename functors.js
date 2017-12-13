@@ -6,15 +6,15 @@ const { curry } = require('.')
  * Identity
  */
 class Identity {
-  constructor(x) {
+  constructor (x) {
     this.__value = x
   }
 
-  static of(x) {
+  static of (x) {
     return new Identity(x)
   }
 
-  map(f) {
+  map (f) {
     return Identity.of(f(this.__value))
   }
 }
@@ -27,19 +27,19 @@ class Identity {
  * Maybe
  */
 class Maybe {
-  constructor(x) {
+  constructor (x) {
     this.__value = x
   }
 
-  static of(x) {
+  static of (x) {
     return new Maybe(x)
   }
 
-  isNothing(f) {
+  isNothing (f) {
     return this.__value === null || this.__value === undefined
   }
 
-  map(f) {
+  map (f) {
     return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this.__value))
   }
 }
@@ -71,16 +71,16 @@ class Maybe {
  * Left
  */
 class Left {
-  constructor(x) {
+  constructor (x) {
     this.__value = x
   }
 
   // TODO: remove this nonsense
-  static of(x) {
+  static of (x) {
     return new Left(x)
   }
 
-  map(f) {
+  map (f) {
     return this
   }
 }
@@ -105,16 +105,16 @@ class Left {
  * Right
  */
 class Right {
-  constructor(x) {
+  constructor (x) {
     this.__value = x
   }
 
   // TODO: remove in favor of Either.of
-  static of(x) {
+  static of (x) {
     return new Right(x)
   }
 
-  map(f) {
+  map (f) {
     return Right.of(f(this.__value))
   }
 }
@@ -149,11 +149,11 @@ class Right {
  * IO
  */
 class IO {
-  constructor(f) {
+  constructor (f) {
     this.unsafePerformIO = f
   }
 
-  static of(x) {
+  static of (x) {
     return new IO(() => x)
   }
 }

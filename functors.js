@@ -1,4 +1,5 @@
-const { curry } = require('.')
+const Task = require('data.task')
+const { compose, curry, identity } = require('.')
 
 // const inspect = x => (x && x.inspect ? x.inspect() : x)
 
@@ -42,18 +43,18 @@ class Maybe {
   map (f) {
     return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this.__value))
   }
-}
 
-// Maybe.prototype.chain = function (f) {
-//   return this.map(f).join()
-// }
+  // chain(f) {
+  //   return this.map(f).join()
+  // }
+
+  join () {
+    return this.isNothing() ? Maybe.of(null) : this.__value
+  }
+}
 
 // Maybe.prototype.ap = function (other) {
 //   return this.isNothing() ? Maybe.of(null) : other.map(this.__value)
-// }
-
-// Maybe.prototype.join = function () {
-//   return this.isNothing() ? Maybe.of(null) : this.__value
 // }
 
 // Maybe.prototype.inspect = function () {
@@ -156,15 +157,15 @@ class IO {
   static of (x) {
     return new IO(() => x)
   }
+
+  map (f) {
+    return new IO(compose(f, this.unsafePerformIO))
+  }
+
+  join () {
+    return this.unsafePerformIO()
+  }
 }
-
-// IO.prototype.map = function (f) {
-//   return new IO(compose(f, this.unsafePerformIO))
-// }
-
-// IO.prototype.join = function () {
-//   return this.unsafePerformIO()
-// }
 
 // IO.prototype.chain = function (f) {
 //   return this.map(f).join()
@@ -180,7 +181,7 @@ class IO {
 //   return 'IO(' + inspect(this.unsafePerformIO) + ')'
 // }
 
-// const unsafePerformIO = x => x.unsafePerformIO()
+const unsafePerformIO = x => x.unsafePerformIO()
 
 const either = curry((f, g, e) => {
   switch (e.constructor) {
@@ -191,14 +192,9 @@ const either = curry((f, g, e) => {
   }
 })
 
-// overwriting join from pt 1
-// const join = m => m.join()
-
-// const chain = curry((f, m) => m.map(f).join()) // or compose(join, map(f))(m)
-
-// Task.prototype.join = function () {
-//   return this.chain(identity)
-// }
+Task.prototype.join = function () {
+  return this.chain(identity)
+}
 
 module.exports = {
   either,
@@ -206,5 +202,7 @@ module.exports = {
   IO,
   Left,
   Maybe,
-  Right
+  Right,
+  Task,
+  unsafePerformIO
 }

@@ -1,8 +1,6 @@
 const Task = require('data.task')
 const { compose, curry, identity } = require('.')
 
-// const inspect = x => (x && x.inspect ? x.inspect() : x)
-
 /**
  * Identity
  */
@@ -20,10 +18,6 @@ class Identity {
   }
 }
 
-// Identity.prototype.inspect = function () {
-//   return 'Identity(' + inspect(this.__value) + ')'
-// }
-
 /**
  * Maybe
  */
@@ -36,6 +30,10 @@ class Maybe {
     return new Maybe(x)
   }
 
+  ap (functor) {
+    return this.isNothing() ? Maybe.of(null) : functor.map(this.__value)
+  }
+
   isNothing (f) {
     return this.__value === null || this.__value === undefined
   }
@@ -44,29 +42,10 @@ class Maybe {
     return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this.__value))
   }
 
-  // chain(f) {
-  //   return this.map(f).join()
-  // }
-
   join () {
     return this.isNothing() ? Maybe.of(null) : this.__value
   }
 }
-
-// Maybe.prototype.ap = function (other) {
-//   return this.isNothing() ? Maybe.of(null) : other.map(this.__value)
-// }
-
-// Maybe.prototype.inspect = function () {
-//   return 'Maybe(' + inspect(this.__value) + ')'
-// }
-
-// Either
-// const Either = function () {}
-
-// Either.of = function (x) {
-//   return new Right(x)
-// }
 
 /**
  * Left
@@ -86,22 +65,6 @@ class Left {
   }
 }
 
-// Left.prototype.ap = function (other) {
-//   return this
-// }
-
-// Left.prototype.join = function () {
-//   return this
-// }
-
-// Left.prototype.chain = function () {
-//   return this
-// }
-
-// Left.prototype.inspect = function () {
-//   return 'Left(' + inspect(this.__value) + ')'
-// }
-
 /**
  * Right
  */
@@ -120,32 +83,6 @@ class Right {
   }
 }
 
-// Right.prototype.join = function () {
-//   return this.__value
-// }
-
-// Right.prototype.chain = function (f) {
-//   return f(this.__value)
-// }
-
-// Right.prototype.ap = function (other) {
-//   return this.chain(function (f) {
-//     return other.map(f)
-//   })
-// }
-
-// Right.prototype.join = function () {
-//   return this.__value
-// }
-
-// Right.prototype.chain = function (f) {
-//   return f(this.__value)
-// }
-
-// Right.prototype.inspect = function () {
-//   return 'Right(' + inspect(this.__value) + ')'
-// }
-
 /**
  * IO
  */
@@ -158,6 +95,14 @@ class IO {
     return new IO(() => x)
   }
 
+  chain (f) {
+    return this.map(f).join()
+  }
+
+  ap (functor) {
+    return this.chain(f => functor.map(f))
+  }
+
   map (f) {
     return new IO(compose(f, this.unsafePerformIO))
   }
@@ -166,20 +111,6 @@ class IO {
     return this.unsafePerformIO()
   }
 }
-
-// IO.prototype.chain = function (f) {
-//   return this.map(f).join()
-// }
-
-// IO.prototype.ap = function (a) {
-//   return this.chain(function (f) {
-//     return a.map(f)
-//   })
-// }
-
-// IO.prototype.inspect = function () {
-//   return 'IO(' + inspect(this.unsafePerformIO) + ')'
-// }
 
 const unsafePerformIO = x => x.unsafePerformIO()
 
@@ -192,6 +123,8 @@ const either = curry((f, g, e) => {
   }
 })
 
+const liftA2 = curry((f, fx, fy) => fx.map(f).ap(fy))
+
 Task.prototype.join = function () {
   return this.chain(identity)
 }
@@ -201,6 +134,7 @@ module.exports = {
   Identity,
   IO,
   Left,
+  liftA2,
   Maybe,
   Right,
   Task,

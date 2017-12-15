@@ -56,7 +56,7 @@ const CARS = [
   }
 ]
 
-describe('You are now a genius of compose!!! 🤓 👏🏼 👏🏼 👏🏼', () => {
+describe('Compose', () => {
   // Exercise 1
   test('Use compose() to rewrite the function below. Hint: prop() is curried.', () => {
     const isLastInStock = compose(prop('in_stock'), last)

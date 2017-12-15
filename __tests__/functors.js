@@ -2,7 +2,7 @@ const Task = require('data.task')
 const { Identity, IO, Left, Maybe, Right, either } = require('../functors')
 const { add, curry, compose, concat, prop, map, head, toUpper } = require('..')
 
-describe('You are now a FUNCTOR genius!!! 🤓 👏🏼 👏🏼 👏🏼', () => {
+describe('Functors', () => {
   // Exercise 1
   test('Use add(x,y) and map(f,x) to make a function that increments a value inside a functor.', () => {
     // ex1 :: Number -> Number

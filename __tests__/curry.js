@@ -1,6 +1,6 @@
 const { curry, split, map, filter, reduce } = require('..')
 
-describe('You are now a CURRY genius!!! 🍛 👏🏼 👏🏼 👏🏼', () => {
+describe('Curry 🍛', () => {
   // Exercise 1
   test('Refactor to remove all arguments by partially applying the function.', () => {
     const words = split(' ')

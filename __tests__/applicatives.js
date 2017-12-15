@@ -21,7 +21,7 @@ const getComments = i =>
 // fib browser for test
 const localStorage = {}
 
-describe('You are now an APPLICATIVE FUNCTOR genius!!! 🤓 👏🏼 👏🏼 👏🏼', () => {
+describe('Applicative Functors', () => {
   // Exercise 1
   test('Write a function that adds two possibly null numbers together using Maybe and ap().', () => {
     //  ex1 :: Number -> Number -> Maybe Number

@@ -19,7 +19,7 @@ const {
   map
 } = require('..')
 
-describe('You are now a MONAD genius!!! 🤓 👏🏼 👏🏼 👏🏼', () => {
+describe('Monads', () => {
   // Exercise 1
   test('Use safeProp and map/join or chain to safely get the street name when given a user.', () => {
     const safeProp = curry((x, o) => Maybe.of(o[x]))

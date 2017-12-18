@@ -6,7 +6,7 @@ const request = require('request')
 const Task = require('data.task')
 const { List } = require('immutable-ext')
 
-//#region Spotify
+// #region Spotify
 const httpGet = url =>
   new Task((rej, res) =>
     request(url, (error, response, body) => (error ? rej(error) : res(body)))
@@ -29,10 +29,10 @@ const findArtist = name =>
 
 // Task -> [Artist]
 const relatedArtists = id =>
-  getJSON(`https://api.spotify.com/v1/artists/${id}/related-artists`)
-    .map(res => (console.log(res), res))
-    .map(result => result.artists)
-//#endregion
+  getJSON(`https://api.spotify.com/v1/artists/${id}/related-artists`).map(
+    result => result.artists
+  )
+// #endregion
 
 const argv = new Task((_, res) => res(process.argv))
 const names = argv.map(args => args.slice(2))

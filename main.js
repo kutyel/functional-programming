@@ -5,6 +5,8 @@ export const curry = (f, arr = []) => (...args) =>
 
 export const add = curry((x, y) => x + y)
 
+export const assoc = curry((key, val, obj) => ({ ...obj, [key]: val }))
+
 export const chain = curry((f, m) => m.map(f).join())
 
 export const concat = curry((x, y) => x.concat(y))

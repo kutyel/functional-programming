@@ -45,7 +45,7 @@
     "esm": "js"
   },
   "engines": {
-    "node": ">= 6"
+    "node": ">= 9"
   },
   "scripts": {
     "clean": "rm -rf node_modules",
